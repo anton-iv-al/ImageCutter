@@ -10,20 +10,38 @@ using System.Windows;
 
 namespace ImageCutter.Views.Main {
     public class MainPresenter : Presenter<MainWindow> {
-        public MainPresenter(MainWindow view) : base(view) { }
+        private string _originDirKey = "origin_dir";
+        private string _sizeKey = "size";
+        private string _borderKey = "border";
+
+        public MainPresenter(MainWindow view) : base(view) {
+            SetWindowFromConfig();
+        }
 
         public void OnCutButtonClick() {
-            string dir = @"C:\Users\Anton\Downloads\tmp\";
+            if (!TryGetParamsFromWindow(out string dir, out int size, out double border)) return;
 
-            int size;
-            double border;
+            var configurationParams = new Dictionary<string, string>() {
+                {_originDirKey, dir},
+                {_sizeKey, size.ToString()},
+                {_borderKey, border.ToString()}
+            };
+            ConfigurationHelper.SaveConfiguration(configurationParams);
+
+            DirectoryHelper.CutAllImagesInDir(dir, size, border);
+        }
+
+        private bool TryGetParamsFromWindow(out string dir, out int size, out double border) {
+            dir = _view.DirectoryText;
+            size = 0;
+            border = 0;
 
             try {
                 size = _view.SizeText;
             }
             catch (Exception) {
                 MessageBox.Show("Size string wrong format");
-                return;
+                return false;
             }
 
             try {
@@ -31,10 +49,32 @@ namespace ImageCutter.Views.Main {
             }
             catch (Exception) {
                 MessageBox.Show("Border string wrong format");
-                return;
+                return false;
             }
 
-            DirectoryHelper.CutAllImagesInDir(dir, size, border);
+            return true;
+        }
+
+        private void SetWindowFromConfig() {
+            var configParams = ConfigurationHelper.LoadConfiguration();
+
+            if (configParams.ContainsKey(_originDirKey)) {
+                _view.DirectoryText = configParams[_originDirKey];
+            }
+
+            if (configParams.ContainsKey(_sizeKey)) {
+                try {
+                    _view.SizeText = int.Parse(configParams[_sizeKey]);
+                }
+                catch (Exception) { }
+            }
+
+            if (configParams.ContainsKey(_borderKey)) {
+                try {
+                    _view.BorderText = double.Parse(configParams[_borderKey]);
+                }
+                catch (Exception) { }
+            }
         }
     }
 }

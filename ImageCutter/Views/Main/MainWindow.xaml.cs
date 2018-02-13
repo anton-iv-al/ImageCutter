@@ -33,8 +33,15 @@ namespace ImageCutter.Views.Main {
             set => DirectoryControl.Text = value;
         }
 
-        public int SizeText => int.Parse(SizeControl.Text);
-        public double BorderText => double.Parse(BorderControl.Text);
+        public int SizeText {
+            get => int.Parse(SizeControl.Text);
+            set => SizeControl.Text = value.ToString();
+        }
+
+        public double BorderText {
+            get => double.Parse(BorderControl.Text);
+            set => BorderControl.Text = value.ToString();
+        }
 
         private void CutButtonControl_Click(object sender, RoutedEventArgs e) {
             _presenter.OnCutButtonClick();
