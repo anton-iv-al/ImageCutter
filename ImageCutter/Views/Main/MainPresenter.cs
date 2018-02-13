@@ -14,13 +14,6 @@ namespace ImageCutter.Views.Main {
 
         public void OnCutButtonClick() {
             string dir = @"C:\Users\Anton\Downloads\tmp\";
-            string path = @"C:\Users\Anton\Downloads\tmp\test.png";
-
-            string newDir = dir + @"cutted\";
-            string newPath = newDir + "test_copy.png";
-            Directory.CreateDirectory(newDir);
-
-            var image = Image.FromFile(path) as Bitmap;
 
             int size;
             double border;
@@ -41,11 +34,7 @@ namespace ImageCutter.Views.Main {
                 return;
             }
 
-            image = ImageHelper.CutImage(image, size, border);
-
-            image.Save(newPath, ImageFormat.Png);
-
-            image.Dispose();
+            DirectoryHelper.CutAllImagesInDir(dir, size, border);
         }
     }
 }

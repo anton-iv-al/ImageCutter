@@ -55,6 +55,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ConfigurationHelper.cs" />
+    <Compile Include="DirectoryHelper.cs" />
     <Compile Include="ImageHelper.cs" />
     <Compile Include="Views\Main\MainPresenter.cs" />
     <Compile Include="Views\Presenter.cs" />
