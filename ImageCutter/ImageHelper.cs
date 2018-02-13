@@ -13,15 +13,29 @@ namespace ImageCutter {
         public static Bitmap CutImage(Bitmap image) {
             _image = image;
 
-            var rect = RectangleForCut();
+            var rectForCut = RectangleForCut();
 
-            var newImage = new Bitmap(2000, 2000);
+            var newImage = NewEmptyImage(rectForCut, out var rectForPaste);
 
-            var clone = _image.Clone(rect, _image.PixelFormat);
             var graphics = Graphics.FromImage(newImage);
-            graphics.DrawImage(clone, new PointF(0, 0));
+            graphics.DrawImage(_image, rectForPaste, rectForCut, GraphicsUnit.Pixel);
 
             return newImage;
+        }
+
+        private static Bitmap NewEmptyImage(Rectangle rectForCut, out Rectangle rectForPaste) {
+            int maxSize = Math.Max(rectForCut.Width, rectForCut.Height);
+            int minSize = Math.Min(rectForCut.Width, rectForCut.Height);
+            int offset = (maxSize - minSize) / 2;
+            bool isWidthMax = rectForCut.Width == maxSize;
+
+            var offsetPoint = isWidthMax ?
+                new System.Drawing.Point(0, offset) :
+                new System.Drawing.Point(offset, 0);
+
+            rectForPaste = new Rectangle(offsetPoint, rectForCut.Size);
+
+            return new Bitmap(maxSize, maxSize);
         }
 
         private static Rectangle RectangleForCut() {
