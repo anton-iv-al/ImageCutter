@@ -22,7 +22,26 @@ namespace ImageCutter.Views.Main {
 
             var image = Image.FromFile(path) as Bitmap;
 
-            image = ImageHelper.CutImage(image);
+            int size;
+            double border;
+
+            try {
+                size = _view.SizeText;
+            }
+            catch (Exception) {
+                MessageBox.Show("Size string wrong format");
+                return;
+            }
+
+            try {
+                border = _view.BorderText;
+            }
+            catch (Exception) {
+                MessageBox.Show("Border string wrong format");
+                return;
+            }
+
+            image = ImageHelper.CutImage(image, size, border);
 
             image.Save(newPath, ImageFormat.Png);
 

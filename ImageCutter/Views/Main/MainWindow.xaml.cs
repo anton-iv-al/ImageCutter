@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,8 @@ namespace ImageCutter.Views.Main {
         public MainWindow() {
             InitializeComponent();
             _presenter = new MainPresenter(this);
+
+            CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
         }
 
         public string DirectoryText {
