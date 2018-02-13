@@ -29,7 +29,9 @@ namespace ImageCutter {
             int offset = (maxSize - minSize) / 2;
             bool isWidthMax = rectForCut.Width == maxSize;
 
-            double scaleFactor = (double)newSize / maxSize;
+            int borderPx = (int) (newSize * border);
+
+            double scaleFactor = (double)(newSize - borderPx*2) / maxSize;
 
             int scaledOffset = (int)(offset * scaleFactor);
 
@@ -38,8 +40,8 @@ namespace ImageCutter {
             var rectForPasteSize = new System.Drawing.Size(rectForCutWidthScaled, rectForCutHeightScaled);
 
             var offsetPoint = isWidthMax ?
-                new System.Drawing.Point(0, scaledOffset) :
-                new System.Drawing.Point(scaledOffset, 0);
+                new System.Drawing.Point(borderPx, scaledOffset + borderPx) :
+                new System.Drawing.Point(scaledOffset + borderPx, borderPx);
 
             rectForPaste = new Rectangle(offsetPoint, rectForPasteSize);
 
