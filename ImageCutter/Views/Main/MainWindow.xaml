@@ -22,10 +22,11 @@
         <Label Grid.Column="0" Grid.Row="0" Content="Directory" Foreground="White"></Label>
         <Label Grid.Column="0" Grid.Row="1" Content="Size, px" Foreground="White"></Label>
         <Label Grid.Column="0" Grid.Row="2" Content="Border" Foreground="White"></Label>
-        <Button Name="CutButtonControl" Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Width ="100" Height ="50" Content="Cut" Click="CutButtonControl_Click"/>
+        <Button Name="CutButtonControl" Grid.Column="0" Grid.Row="3" Content="Cut" Click="CutButtonControl_Click" Margin="5,10,5,19"/>
 
         <TextBox Name ="DirectoryControl" Grid.Column="1" Grid.Row="0"></TextBox>
         <TextBox Name ="SizeControl" Grid.Column="1" Grid.Row="1" Text="100"></TextBox>
         <TextBox Name ="BorderControl" Grid.Column="1" Grid.Row="2" Text="0.05"></TextBox>
+        <Label Name="ProgressControl" Grid.Column="1" Grid.Row="3" Foreground="White"></Label>
     </Grid>
 </Window>

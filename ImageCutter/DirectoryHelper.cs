@@ -15,7 +15,7 @@ namespace ImageCutter {
 
         private static string _dirForCutted;
 
-        public static void CutAllImagesInDir(string dir, int size, double border) {
+        public static void CutAllImagesInDir(string dir, int size, double border, Action<string> setProcessText) {
             _size = size;
             _border = border;
 
@@ -24,9 +24,14 @@ namespace ImageCutter {
 
             var files = Directory.GetFiles(dir);
 
+            int i = 1;
             foreach (var filePath in files) {
+                setProcessText($"Processing: {i}/{files.Length}\n{filePath}");
                 CutOneImage(filePath);
+                ++i;
             }
+
+            setProcessText("Done");
         }
 
         private static void CutOneImage(string filePath) {

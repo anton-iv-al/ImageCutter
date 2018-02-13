@@ -43,6 +43,13 @@ namespace ImageCutter.Views.Main {
             set => BorderControl.Text = value.ToString();
         }
 
+//        public string ProgressText {
+//            get => ProgressControl.Content.ToString();
+//            set => ProgressControl.Content = value;
+//        }
+
+        public void SetProgressText(string text) => ProgressControl.Content = text;
+
         private void CutButtonControl_Click(object sender, RoutedEventArgs e) {
             _presenter.OnCutButtonClick();
         }

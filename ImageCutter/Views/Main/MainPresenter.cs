@@ -27,9 +27,21 @@ namespace ImageCutter.Views.Main {
                 {_borderKey, border.ToString()}
             };
             ConfigurationHelper.SaveConfiguration(configurationParams);
+            
+            
 
-            DirectoryHelper.CutAllImagesInDir(dir, size, border);
+            Task.Run(() => {
+                try {
+                    DirectoryHelper.CutAllImagesInDir(dir, size, border, SetProcessText);
+                }
+                catch (Exception e) {
+                    MessageBox.Show(e.Message);
+                    SetProcessText(String.Empty);
+                }
+            });
         }
+
+        private void SetProcessText(string text) => _view.Dispatcher.Invoke(() => _view.SetProgressText(text));
 
         private bool TryGetParamsFromWindow(out string dir, out int size, out double border) {
             dir = _view.DirectoryText;
