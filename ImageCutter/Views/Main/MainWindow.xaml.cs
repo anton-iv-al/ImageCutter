@@ -24,8 +24,6 @@ namespace ImageCutter.Views.Main {
         public MainWindow() {
             InitializeComponent();
             _presenter = new MainPresenter(this);
-
-            CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
         }
 
         public string DirectoryText {
@@ -39,7 +37,7 @@ namespace ImageCutter.Views.Main {
         }
 
         public double BorderText {
-            get => double.Parse(BorderControl.Text);
+            get => double.Parse(BorderControl.Text.Replace(',', '.'), NumberFormatInfo.InvariantInfo);
             set => BorderControl.Text = value.ToString();
         }
 
